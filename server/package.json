@@ -1,0 +1,25 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "ts-node src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "seed": "ts-node seed.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^5.22.0",
+    "fastify": "^4.x",
+    "zod": "^3.x"
+  },
+  "devDependencies": {
+    "@types/node": "^18.19.75",
+    "prisma": "^5.x",
+    "ts-node": "^10.x",
+    "typescript": "^5.x"
+  }
+}
