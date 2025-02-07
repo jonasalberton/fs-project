@@ -1,13 +1,14 @@
-import EmployeeList from "@/components/employee/employee-list";
-import { Button } from "@/components/ui/button";
 import { Suspense } from "react";
+import EmployeeList from "@/components/employee/employee-list";
+
+import NewEmployeeModal from "@/components/employee/new-employee-modal";
 
 export default function Page() {
   return (
-    <div>
+    <div className="max-w-4xl m-auto">
       <div className="flex items-center justify-between mb-5 ">
         <h1 className="font-semibold">Employees</h1>
-        <Button variant={"default"}>New Employee</Button>
+        <NewEmployeeModal />
       </div>
       <Suspense fallback="Loading...">
         <EmployeeList />

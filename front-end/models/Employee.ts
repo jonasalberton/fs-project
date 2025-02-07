@@ -7,7 +7,9 @@ export type Employee = {
   hireDate: Date;
   departmentId: number;
   phone?: string;
-  address: string;
+  address?: string;
 };
 
 export type FullEmployee = Employee & { department: Department };
+
+export type CreateEmployee = Omit<Employee, 'id'>

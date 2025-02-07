@@ -11,7 +11,9 @@ type Props = {
 
 export default function EmployeeCard({ employee }: Props) {
   const dateRow = useMemo(() => {
-    return `${formatDate(employee.hireDate)} (${formatRelativeDifference(employee.hireDate)})`;
+    return `${formatDate(employee.hireDate)} (${formatRelativeDifference(
+      employee.hireDate
+    )})`;
   }, [employee]);
 
   return (

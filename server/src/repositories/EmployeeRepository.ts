@@ -6,6 +6,9 @@ import { Employee } from "@prisma/client";
 export class EmployeeRepository implements IRepository<Employee> {
   async getAll() {
     return prisma.employee.findMany({
+      orderBy: {
+        createdAt: "desc",
+      },
       include: { department: true },
     });
   }
