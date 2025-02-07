@@ -66,6 +66,7 @@ export default function NewEmployeeModal() {
         lastName: data.lastname,
       });
 
+      reset();
       setIsOpen(false);
       refresh();
     } catch (error) {
