@@ -1,15 +1,32 @@
+"use client";
+
 import { FullEmployee } from "@/models/Employee";
 import { Card } from "../ui/card";
 import { Button } from "../ui/button";
 import { Trash2 } from "lucide-react";
 import { formatDate, formatRelativeDifference } from "@/lib/date";
 import { useMemo } from "react";
+import { useEmployee } from "@/hooks/useEmployee";
+import { useRouter } from "next/navigation";
 
 type Props = {
   employee: FullEmployee;
 };
 
 export default function EmployeeCard({ employee }: Props) {
+  const { deleteEmployee } = useEmployee();
+  const { refresh } = useRouter();
+
+  const handleDelete = async () => {
+    // Ideally I'd implement a confirmation modal before triggering the delete action
+    try {
+      await deleteEmployee(employee.id);
+      refresh();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const dateRow = useMemo(() => {
     return `${formatDate(employee.hireDate)} (${formatRelativeDifference(
       employee.hireDate
@@ -30,7 +47,7 @@ export default function EmployeeCard({ employee }: Props) {
       </div>
 
       <Button>View Details</Button>
-      <Button variant={"ghost"}>
+      <Button variant={"ghost"} onClick={handleDelete}>
         <Trash2 size={22} className="text-red-600" />
       </Button>
     </Card>
