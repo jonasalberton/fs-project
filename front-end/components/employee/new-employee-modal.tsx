@@ -41,7 +41,7 @@ type FormData = z.TypeOf<typeof schema>;
 
 export default function NewEmployeeModal() {
   const { departments } = useEmployeePortalContext();
-  const { isSaving, createEmployee } = useEmployee();
+  const { createEmployee } = useEmployee();
   const { refresh } = useRouter();
   const [isOpen, setIsOpen] = useState(false);
 

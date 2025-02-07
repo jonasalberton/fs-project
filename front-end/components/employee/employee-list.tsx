@@ -1,9 +1,10 @@
 import { FullEmployee } from "@/models/Employee";
 import EmployeeCard from "./employee-card";
+import { useEmployee } from "@/hooks/useEmployee";
 
 export default async function EmployeeList() {
-  const res = await fetch("http://localhost:3333/employees");
-  const employees: FullEmployee[] = await res.json();
+  const { getAllEmployees} = useEmployee()
+  const employees: FullEmployee[] = await getAllEmployees();
 
   return (
     <div className="flex flex-col gap-2">

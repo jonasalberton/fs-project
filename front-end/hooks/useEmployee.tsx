@@ -1,43 +1,28 @@
 import { CreateEmployee } from "@/models/Employee";
-import { useState } from "react";
 
+// In a real app wiht timeout to get the response, I'd implemt a isLoading / isSaving state to show a spinner
 export function useEmployee() {
-  const [isSaving, setIsSaving] = useState(false);
-  const [isDeleting, setIsDeleting] = useState(false);
+  const getAllEmployees = () => {
+    return fetch("http://localhost:3333/employees", {
+      cache: "no-cache",
+    }).then(res => res.json());
+  };
 
-  const createEmployee = async (employeeData: CreateEmployee) => {
-    setIsSaving(true);
-
+  const createEmployee = (employeeData: CreateEmployee) => {
     return fetch("http://localhost:3333/employees", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(employeeData),
-    })
-      .catch((error) => {
-        console.log(error);
-        throw error;
-      })
-      .finally(() => {
-        setIsSaving(false);
-      });
+    });
   };
 
-  const deleteEmployee = async (id: number) => {
-    setIsDeleting(true);
-
+  const deleteEmployee = (id: number) => {
     return fetch(`http://localhost:3333/employees/${id}`, {
       method: "DELETE",
-    })
-      .catch((error) => {
-        console.log(error);
-        throw error;
-      })
-      .finally(() => {
-        setIsDeleting(false);
-      });
+    });
   };
 
-  return { isSaving, isDeleting, createEmployee, deleteEmployee };
+  return { createEmployee, deleteEmployee, getAllEmployees };
 }

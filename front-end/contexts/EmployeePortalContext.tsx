@@ -28,8 +28,6 @@ export const EmployeePortalContextProvider = ({
     fetchDepartments();
   }, []);
 
-  console.log("departments", departments);
-
   return (
     <EmployeePortalContext.Provider value={{ departments }}>
       {children}
