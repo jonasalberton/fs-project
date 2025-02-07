@@ -1,8 +1,13 @@
+"use client";
+
+import { useEffect } from "react";
+import { redirect } from "next/navigation";
+import { ROUTES } from "@/routes";
 
 export default function Home() {
-  return (
-    <div className="">
-     Hello World
-    </div>
-  );
+  useEffect(() => {
+    redirect(ROUTES.EMPLOYEES);
+  }, []);
+
+  return <div></div>;
 }
