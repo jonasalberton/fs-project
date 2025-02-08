@@ -1,3 +1,4 @@
 export const ROUTES = {
-    EMPLOYEES: 'employees'
-}
+  EMPLOYEES: "employees",
+  EMPLOYEE_DETAILS: "employees/:id",
+};

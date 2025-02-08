@@ -6,6 +6,8 @@ export default async function EmployeeList() {
   const { getAllEmployees} = useEmployee()
   const employees: FullEmployee[] = await getAllEmployees();
 
+  console.log(employees);
+  
   return (
     <div className="flex flex-col gap-2">
       {employees.map((item) => (

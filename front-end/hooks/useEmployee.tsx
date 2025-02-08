@@ -5,7 +5,7 @@ export function useEmployee() {
   const getAllEmployees = () => {
     return fetch("http://localhost:3333/employees", {
       cache: "no-cache",
-    }).then(res => res.json());
+    }).then((res) => res.json());
   };
 
   const createEmployee = (employeeData: CreateEmployee) => {
@@ -24,5 +24,12 @@ export function useEmployee() {
     });
   };
 
-  return { createEmployee, deleteEmployee, getAllEmployees };
+  const getEmployeeById = (id: number) => {
+    return fetch(`http://localhost:3333/employees/${id}`, {
+      method: "GET",
+      cache: "no-cache",
+    }).then(res => res.json());
+  };
+
+  return { createEmployee, deleteEmployee, getAllEmployees, getEmployeeById };
 }

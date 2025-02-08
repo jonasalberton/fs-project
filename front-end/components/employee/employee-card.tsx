@@ -8,6 +8,8 @@ import { formatDate, formatRelativeDifference } from "@/lib/date";
 import { useMemo } from "react";
 import { useEmployee } from "@/hooks/useEmployee";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { ROUTES } from "@/routes";
 
 type Props = {
   employee: FullEmployee;
@@ -46,7 +48,11 @@ export default function EmployeeCard({ employee }: Props) {
         <div className="text-xs text-gray-600">{dateRow}</div>
       </div>
 
-      <Button>View Details</Button>
+      <Link
+        href={ROUTES.EMPLOYEE_DETAILS.replace(":id", employee.id.toString())}
+      >
+        <Button>View Details</Button>
+      </Link>
       <Button variant={"ghost"} onClick={handleDelete}>
         <Trash2 size={22} className="text-red-600" />
       </Button>
