@@ -6,6 +6,7 @@ export const EmployeeSchema = z.object({
   lastName: z.string(),
   hireDate: z.date(),
   departmentId: z.number(),
+  isActive: z.boolean(),
   phone: z.string().nullable(),
   address: z.string().nullable(),
 });

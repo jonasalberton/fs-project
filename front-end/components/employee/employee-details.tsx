@@ -1,7 +1,7 @@
 "use client";
 
 import { formatDate, formatRelativeDifference } from "@/lib/date";
-import { FullEmployee } from "@/models/Employee";
+import { Employee, FullEmployee } from "@/models/Employee";
 import { useMemo, useState } from "react";
 import { Button } from "../ui/button";
 import { useEmployeePortalContext } from "@/contexts/EmployeePortalContext";
@@ -27,17 +27,24 @@ export default function EmployeeDetails({ employee: initialState }: Props) {
     employee.department
   );
 
-  const updateEmployeeDepartment = async (newDepartment: Department) => {
+  const handleUpdate = async (data: Partial<Employee>) => {
     try {
       const updatedEmployee = await updateEmployeeById(employee.id, {
-        departmentId: newDepartment.id,
+        ...data,
       }).then((res) => res.json());
 
       setEmployee(updatedEmployee);
     } catch (error) {
       console.log(error);
-      
     }
+  };
+
+  const updateEmployeeDepartment = (department: Department) => {
+    handleUpdate({ departmentId: department.id });
+  };
+
+  const toggleEmployeeStatus = (value: boolean) => {
+    handleUpdate({ isActive: value });
   };
 
   const [formatedDate, dateRange] = useMemo(
@@ -51,7 +58,13 @@ export default function EmployeeDetails({ employee: initialState }: Props) {
   return (
     <div className="mt-4">
       <div className="grid grid-cols-[230px_1fr_100px]">
-        <div className="h-52 w-52 bg-zinc-300" />
+        <div className="h-52 w-52 bg-zinc-300 relative">
+          {!employee.isActive && (
+            <div className="bg-red-500 text-center text-white border m-auto absolute bottom-0 w-full">
+              Inactive
+            </div>
+          )}
+        </div>
         <div>
           <h1 className="font-semibold mb-4">
             {employee.firstName} {employee.lastName}
@@ -102,8 +115,13 @@ export default function EmployeeDetails({ employee: initialState }: Props) {
           <div className="font-bold">Hire Date</div>
           <div className="text-sm text-gray-600">{formatedDate}</div>
           <div className="text-sm text-gray-600">{dateRange}</div>
-          <Button variant={"destructive"} size={"sm"} className="mt-2">
-            Deactivate
+          <Button
+            variant={employee.isActive ? "destructive" : "default"}
+            size={"sm"}
+            className="mt-2"
+            onClick={() => toggleEmployeeStatus(!employee.isActive)}
+          >
+            {employee.isActive ? "Deactivate" : "Activate"}
           </Button>
         </div>
       </div>

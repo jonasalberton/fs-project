@@ -30,6 +30,9 @@ export class EmployeeRepository implements IRepository<Employee> {
   }
 
   async update(id: number, data: Partial<Employee>) {
+
+    console.log('data: ', data);
+    
     return prisma.employee.update({
       where: { id },
       data,
