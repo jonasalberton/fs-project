@@ -20,6 +20,7 @@ model Employee {
   address    String?
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
+  departmentHistory DepartmentHistory[]
 }
 
 model Department {
@@ -28,4 +29,14 @@ model Department {
   employees Employee[]
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
+  departmentHistory DepartmentHistory[]
+}
+
+model DepartmentHistory {
+  id         Int        @id @default(autoincrement())
+  employeeId Int
+  employee   Employee   @relation(fields: [employeeId], references: [id])
+  departmentId Int 
+  department  Department @relation(fields: [departmentId], references: [id])
+  createdAt  DateTime   @default(now())
 }

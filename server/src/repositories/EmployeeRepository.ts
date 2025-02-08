@@ -30,14 +30,22 @@ export class EmployeeRepository implements IRepository<Employee> {
   }
 
   async update(id: number, data: Partial<Employee>) {
-
-    console.log('data: ', data);
-    
-    return prisma.employee.update({
+    const employee = await prisma.employee.update({
       where: { id },
       data,
       include: { department: true },
     });
+
+    if (data.departmentId) {
+      await prisma.departmentHistory.create({
+        data: {
+          employeeId: id,
+          departmentId: data.departmentId,
+        },
+      });
+    }
+
+    return employee;
   }
 
   async delete(id: number): Promise<void> {
