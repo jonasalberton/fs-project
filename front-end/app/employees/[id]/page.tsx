@@ -1,22 +1,21 @@
 import EmployeeDetails from "@/components/employee/employee-details";
+import { getEmployeeById } from "@/services/employeeService";
+import { FullEmployee } from "@/models/Employee";
 import { Suspense } from "react";
 
 type PageParams = {
-  params: {
-    id: string;
-  };
+  params: Promise<{ id: string }>;
 };
 
 export default async function Page({ params }: PageParams) {
   const { id } = await params;
-
-  if (!id) return "ID no suplied";
+  const employee: FullEmployee = await getEmployeeById(parseInt(id));
 
   return (
     <div className="max-w-4xl m-auto">
       <h1 className="font-semibold">Employee Details</h1>
       <Suspense fallback="Loading..">
-        <EmployeeDetails id={parseInt(id)} />
+        <EmployeeDetails employee={employee} />
       </Suspense>
     </div>
   );

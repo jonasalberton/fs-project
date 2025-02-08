@@ -21,13 +21,19 @@ export class EmployeeRepository implements IRepository<Employee> {
   }
 
   async create(data: CreateEmployee) {
-    return prisma.employee.create({ data });
+    return prisma.employee.create({
+      data,
+      include: {
+        department: true,
+      },
+    });
   }
 
   async update(id: number, data: Partial<Employee>) {
     return prisma.employee.update({
       where: { id },
       data,
+      include: { department: true },
     });
   }
 

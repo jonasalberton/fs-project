@@ -4,7 +4,7 @@ import { Input } from './input';
 
 interface FormFieldProps {
   label: string;
-  registerInput: any;
+  registerInput: object;
   name: string;
   error?: string;
 }

@@ -6,24 +6,21 @@ import { Button } from "../ui/button";
 import { Trash2 } from "lucide-react";
 import { formatDate, formatRelativeDifference } from "@/lib/date";
 import { useMemo } from "react";
-import { useEmployee } from "@/hooks/useEmployee";
-import { useRouter } from "next/navigation";
+import { deleteEmployee } from "@/services/employeeService";
 import Link from "next/link";
 import { ROUTES } from "@/routes";
 
 type Props = {
   employee: FullEmployee;
+  onRemoveEmployee: (id: number) => void;
 };
 
-export default function EmployeeCard({ employee }: Props) {
-  const { deleteEmployee } = useEmployee();
-  const { refresh } = useRouter();
-
+export default function EmployeeCard({ employee, onRemoveEmployee }: Props) {
   const handleDelete = async () => {
     // Ideally I'd implement a confirmation modal before triggering the delete action
     try {
       await deleteEmployee(employee.id);
-      refresh();
+      onRemoveEmployee(employee.id);
     } catch (error) {
       console.log(error);
     }

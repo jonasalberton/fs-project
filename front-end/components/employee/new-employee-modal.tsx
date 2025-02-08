@@ -24,9 +24,9 @@ import {
   SelectValue,
 } from "../ui/select";
 import { Label } from "../ui/label";
-import { useEmployee } from "@/hooks/useEmployee";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { createEmployee } from "@/services/employeeService";
+import { useState, memo } from "react";
+import { FullEmployee } from "@/models/Employee";
 
 const schema = z.object({
   firstname: z.string().min(1, "First name is required"),
@@ -39,10 +39,12 @@ const schema = z.object({
 
 type FormData = z.TypeOf<typeof schema>;
 
-export default function NewEmployeeModal() {
+type Props = {
+  onCreateEmployee: (data: FullEmployee) => void;
+};
+
+function NewEmployeeModal({ onCreateEmployee }: Props) {
   const { departments } = useEmployeePortalContext();
-  const { createEmployee } = useEmployee();
-  const { refresh } = useRouter();
   const [isOpen, setIsOpen] = useState(false);
 
   const {
@@ -57,18 +59,18 @@ export default function NewEmployeeModal() {
 
   const onSubmit = async (data: FormData) => {
     try {
-      await createEmployee({
+      const newEmployee: FullEmployee = await createEmployee({
         phone: data.phone,
         address: data.address,
         departmentId: data.department.id,
         firstName: data.firstname,
         hireDate: new Date(data.hiredate),
         lastName: data.lastname,
-      });
+      }).then((res) => res.json());
 
+      onCreateEmployee(newEmployee);
       reset();
       setIsOpen(false);
-      refresh();
     } catch (error) {
       console.log(error);
     }
@@ -165,3 +167,5 @@ export default function NewEmployeeModal() {
     </Dialog>
   );
 }
+
+export default memo(NewEmployeeModal);
