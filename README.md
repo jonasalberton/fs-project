@@ -45,3 +45,26 @@ Now you are all settle to run the Server Locally using the command:
 ```console
 npm run dev
 ```
+
+
+
+# Front-end
+
+The front-end is build using Next as main Framework, Typescript, Taiwlind and Shadcn as component library
+
+### Setting up
+
+First we need to install all dependencias from package.json file:
+You can use the command:
+
+```console
+npm i
+```
+
+### Running
+
+Now you are all settle to run the Front-end Locally using the command:
+
+```console
+npm run dev
+```
